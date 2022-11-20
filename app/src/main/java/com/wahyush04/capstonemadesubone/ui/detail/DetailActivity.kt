@@ -17,7 +17,7 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private val detailViewModel: DetailViewModel by viewModel()
-    public lateinit var urlRead: String
+    private lateinit var urlRead: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
             showDetails(it)
         }
 
-        binding.btReadMore.setOnClickListener {
+        binding.btnReadMore.setOnClickListener {
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(urlRead)
             startActivity(i)

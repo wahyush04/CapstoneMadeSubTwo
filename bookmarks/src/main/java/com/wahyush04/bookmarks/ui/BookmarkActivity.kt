@@ -10,6 +10,7 @@ import com.wahyush04.bookmarks.di.bookmarkModule
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity.Companion.EXTRA_DATA
 import com.wahyush04.core.adapter.NewsAdapter
+import com.wahyush04.core.domain.model.News
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 
@@ -26,19 +27,20 @@ class BookmarkActivity : AppCompatActivity() {
 
         loadKoinModules(bookmarkModule)
 
-        val newsAdapter = NewsAdapter()
+        val newsAdapter = NewsAdapter(object : NewsAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: News) {
+                Intent(this@BookmarkActivity, DetailActivity::class.java).also {
+                    it.putExtra(EXTRA_DATA, data)
+                    startActivity(it)
+                }
+            }
+
+        })
 
         showLoading(true)
 
-        newsAdapter.onItemClick = { news ->
-            Intent(this@BookmarkActivity, DetailActivity::class.java).also {
-                it.putExtra(EXTRA_DATA, news)
-                startActivity(it)
-            }
-        }
-
         bookmarkViewModel.newsBookmarkList.observe(this@BookmarkActivity) {
-            newsAdapter.setData(it)
+            newsAdapter.differ.submitList(it)
             showLoading(false)
         }
 
@@ -47,7 +49,6 @@ class BookmarkActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = newsAdapter
         }
-
 
     }
 

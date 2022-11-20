@@ -12,9 +12,11 @@ import com.wahyush04.capstonemadesubone.R
 import com.wahyush04.capstonemadesubone.databinding.ActivityMainBinding
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity.Companion.EXTRA_DATA
+import com.wahyush04.core.Constant
 import com.wahyush04.core.Constant.BOOKMARK_URI
 import com.wahyush04.core.adapter.NewsAdapter
 import com.wahyush04.core.data.Resource
+import com.wahyush04.core.domain.model.News
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -29,13 +31,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        newsAdapter = NewsAdapter()
-        newsAdapter.onItemClick = { news ->
-            Intent(this, DetailActivity::class.java).also {
-                it.putExtra(EXTRA_DATA, news)
-                startActivity(it)
+        newsAdapter = NewsAdapter(object : NewsAdapter.OnItemClickCallback{
+            override fun onItemClicked(data: News) {
+                Intent(this@MainActivity, DetailActivity::class.java).also {
+                    it.putExtra(EXTRA_DATA, data)
+                    startActivity(it)
+                }
             }
-        }
+
+        })
+//        newsAdapter.onItemClick = { news ->
+//            Intent(this, DetailActivity::class.java).also {
+//                it.putExtra(EXTRA_DATA, news)
+//                startActivity(it)
+//            }
+//        }
+
+
 
         mainViewModel.news.observe(this@MainActivity) {
             it.apply {
@@ -43,16 +55,16 @@ class MainActivity : AppCompatActivity() {
                     when (this) {
                         is Resource.Loading -> {
                             showLoading(true)
-                            binding.tvError.visibility = View.GONE
+                            binding.tvEror.visibility = View.GONE
                         }
                         is Resource.Success -> {
                             showLoading(false)
-                            newsAdapter.setData(data)
-                            binding.tvError.visibility = View.GONE
+                            newsAdapter.differ.submitList(data)
+                            binding.tvEror.visibility = View.GONE
                         }
                         is Resource.Error -> {
                             showLoading(false)
-                            binding.tvError.visibility = View.VISIBLE
+                            binding.tvEror.visibility = View.VISIBLE
 
                         }
                     }
@@ -65,6 +77,8 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = newsAdapter
         }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
