@@ -34,7 +34,6 @@ class BookmarkActivity : AppCompatActivity() {
                     startActivity(it)
                 }
             }
-
         })
 
         showLoading(true)
@@ -49,14 +48,7 @@ class BookmarkActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = newsAdapter
         }
-
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
-            binding.progressBar.visibility = View.VISIBLE
-        }else{
-            binding.progressBar.visibility = View.GONE
-        }
-    }
+    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
 }

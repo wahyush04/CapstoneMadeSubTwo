@@ -12,7 +12,6 @@ import com.wahyush04.capstonemadesubone.R
 import com.wahyush04.capstonemadesubone.databinding.ActivityMainBinding
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity
 import com.wahyush04.capstonemadesubone.ui.detail.DetailActivity.Companion.EXTRA_DATA
-import com.wahyush04.core.Constant
 import com.wahyush04.core.Constant.BOOKMARK_URI
 import com.wahyush04.core.adapter.NewsAdapter
 import com.wahyush04.core.data.Resource
@@ -40,14 +39,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-//        newsAdapter.onItemClick = { news ->
-//            Intent(this, DetailActivity::class.java).also {
-//                it.putExtra(EXTRA_DATA, news)
-//                startActivity(it)
-//            }
-//        }
-
-
 
         mainViewModel.news.observe(this@MainActivity) {
             it.apply {
@@ -96,11 +87,5 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun showLoading(state: Boolean){
-        if (state){
-            binding.progressBar.visibility = View.VISIBLE
-        }else{
-            binding.progressBar.visibility = View.GONE
-        }
-    }
+    private fun showLoading(state: Boolean) { binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE }
 }

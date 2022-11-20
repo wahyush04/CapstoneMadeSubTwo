@@ -61,7 +61,7 @@ class NewsAdapter(private var onItemClickCallback: OnItemClickCallback): Recycle
 
     }
 
-    private val Diff_Callback = object : DiffUtil.ItemCallback<News>() {
+    private val diffCallback = object : DiffUtil.ItemCallback<News>() {
         override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
         }
@@ -71,7 +71,7 @@ class NewsAdapter(private var onItemClickCallback: OnItemClickCallback): Recycle
         }
     }
 
-    val differ = AsyncListDiffer(this,Diff_Callback)
+    val differ = AsyncListDiffer(this,diffCallback)
 
     interface OnItemClickCallback{
         fun onItemClicked(data: News)
