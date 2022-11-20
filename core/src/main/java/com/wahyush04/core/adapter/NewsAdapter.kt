@@ -22,21 +22,9 @@ class NewsAdapter(private var onItemClickCallback: OnItemClickCallback): Recycle
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(differ.currentList[position])
-//        holder.setIsRecyclable(false)
-//        val data = newsList[position]
-//        holder.bind(data)
     }
 
     override fun getItemCount(): Int = differ.currentList.size
-
-//    fun setData(List: List<News>?) {
-//        if (List == null) return
-//        newsList.apply {
-//            clear()
-//            addAll(List)
-//            notifyDataSetChanged()
-//        }
-//    }
 
     inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemListBinding.bind(itemView)
