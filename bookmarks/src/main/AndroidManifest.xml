@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.wahyush04.bookmarks">
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_bookmarks">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name=".ui.BookmarkActivity"
+            android:parentActivityName="com.wahyush04.capstonemadesubone.ui.main.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="gnews"
+                    android:host="bookmark"/>
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>

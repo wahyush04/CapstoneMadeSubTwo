@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Gnews</string>
+    <string name="logo">Logo</string>
+    <string name="title_bookmarks">Bookmarks</string>
+    <string name="bookmark">bookmark</string>
+    <string name="news_image">News Image</string>
+    <string name="baca_selengkapnya">Read more...</string>
+    <string name="content">Content</string>
+</resources>
